@@ -1,6 +1,7 @@
 package com.jayho.backend.db.entity;
 
 import com.jayho.backend.api.request.UserRegisterReq;
+
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -33,8 +34,9 @@ public class User {
 
     private boolean userDelete;
 
+    static PasswordEncoder passwordEncoder;
     public static User of(UserRegisterReq userRegisterReqInfo) {
-        PasswordEncoder passwordEncoder = null;
+
         return User.builder()
                 .userEmail(userRegisterReqInfo.getUserEmail())
                 .userPw(passwordEncoder.encode(userRegisterReqInfo.getUserPw()))
@@ -43,6 +45,5 @@ public class User {
                 .userImg(userRegisterReqInfo.getUserImg())
                 .userType(UserType.USER)
                 .build();
-
     };
 }

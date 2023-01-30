@@ -5,4 +5,6 @@ import com.jayho.backend.db.entity.User;
 
 public interface UserService {
     User registerUser(UserRegisterReq userRegisterReqInfo);
+
+    User getByUserId(String username);
 }
