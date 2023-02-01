@@ -36,10 +36,10 @@ public class User {
 
     static PasswordEncoder passwordEncoder;
     public static User of(UserRegisterReq userRegisterReqInfo) {
-
+//        passwordEncoder.encode(userRegisterReqInfo.getUserPw())
         return User.builder()
                 .userEmail(userRegisterReqInfo.getUserEmail())
-                .userPw(passwordEncoder.encode(userRegisterReqInfo.getUserPw()))
+                .userPw(userRegisterReqInfo.getUserPw())
                 .userName(userRegisterReqInfo.getUserName())
                 .userDelete(false)
                 .userImg(userRegisterReqInfo.getUserImg())
