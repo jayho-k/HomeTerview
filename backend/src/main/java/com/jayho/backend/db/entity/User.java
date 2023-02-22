@@ -1,9 +1,10 @@
 package com.jayho.backend.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jayho.backend.api.request.UserRegisterReq;
 
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -28,22 +29,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String userPw;
 
     private String userEmail;
 
     private boolean userDelete;
 
-    static PasswordEncoder passwordEncoder;
-    public static User of(UserRegisterReq userRegisterReqInfo) {
-//        passwordEncoder.encode(userRegisterReqInfo.getUserPw())
-        return User.builder()
-                .userEmail(userRegisterReqInfo.getUserEmail())
-                .userPw(userRegisterReqInfo.getUserPw())
-                .userName(userRegisterReqInfo.getUserName())
-                .userDelete(false)
-                .userImg(userRegisterReqInfo.getUserImg())
-                .userType(UserType.USER)
-                .build();
-    };
 }

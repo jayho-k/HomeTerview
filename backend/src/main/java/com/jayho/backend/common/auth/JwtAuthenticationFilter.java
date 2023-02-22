@@ -23,11 +23,12 @@ import java.io.IOException;
  * 요청 헤더에 jwt 토큰이 있는 경우, 토큰 검증 및 인증 처리 로직 정의.
  */
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
+
 	private UserService userService;
-	
-	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
+	private UserDetailService userDetailService;
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserDetailService userDetailService) {
 		super(authenticationManager);
-		this.userService = userService;
+		this.userDetailService = userDetailService;
 	}
 
 	@Override
@@ -41,7 +42,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        
         try {
             // If header is present, try grab user principal from database and perform authorization
             Authentication authentication = getAuthentication(request);
@@ -51,7 +51,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             ResponseBodyWriteUtil.sendError(request, response, ex);
             return;
         }
-        
         filterChain.doFilter(request, response);
 	}
 	
@@ -64,17 +63,17 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             JWTVerifier verifier = JwtTokenUtil.getVerifier();
             JwtTokenUtil.handleError(token);
             DecodedJWT decodedJWT = verifier.verify(token.replace(JwtTokenUtil.TOKEN_PREFIX, ""));
-            String userId = decodedJWT.getSubject();
-            
+            String userEmail = decodedJWT.getSubject();
             // Search in the DB if we find the user by token subject (username)
             // If so, then grab user details and create spring auth token using username, pass, authorities/roles
-            if (userId != null) {
-                    // jwt 토큰에 포함된 계정 정보(userId) 통해 실제 디비에 해당 정보의 계정이 있는지 조회.
-            		User user = userService.getByUserId(userId);
-                if(user != null) {
+            if (userEmail != null) {
+                // jwt 토큰에 포함된 계정 정보(userId) 통해 실제 디비에 해당 정보의 계정이 있는지 조회.
+                // User user = userService.getByUserEmail(userEmail);
+                UserDetails userDetails = userDetailService.loadUserByUsername(userEmail);
+                if(userDetails != null) {
                         // 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
-                		UserDetails userDetails = new UserDetails(user);
-                		UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(userId,
+//                		UserDetails userDetails = new UserDetails(user);
+                		UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(userEmail,
                 				null, userDetails.getAuthorities());
                 		jwtAuthentication.setDetails(userDetails);
                 		return jwtAuthentication;

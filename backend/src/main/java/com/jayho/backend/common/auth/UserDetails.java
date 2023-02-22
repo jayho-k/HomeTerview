@@ -3,6 +3,7 @@ package com.jayho.backend.common.auth;
 import com.jayho.backend.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     @Autowired
-    User user;
+    private User user;
     boolean accountNonExpired;
     boolean accountNonLocked;
     boolean credentialNonExpired;
