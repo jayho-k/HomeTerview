@@ -1,6 +1,7 @@
 package com.jayho.backend.api.request;
 
 import com.jayho.backend.common.util.ValidEnum;
+import com.jayho.backend.db.entity.Status;
 import com.jayho.backend.db.entity.StudyType;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,5 +36,11 @@ public class RecruitInfoReq {
     private String stdDay;
 
     private int stdLimit;
+
+    @ValidEnum(enumClass = StudyType.class)
+    private Status recruitStatus;
+
+    @NotEmpty
+    private String stdImg;
 
 }

@@ -1,6 +1,6 @@
 package com.jayho.backend.db.entity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public abstract class RoomSession extends BaseEntity {
     @Id
     @GeneratedValue
@@ -25,6 +27,6 @@ public abstract class RoomSession extends BaseEntity {
     private int stdLimit;
     @Lob
     private String stdNotation;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
 }

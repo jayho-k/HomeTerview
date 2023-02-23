@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jayho.backend.api.request.UserRegisterReq;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 import javax.persistence.*;
@@ -12,10 +13,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Builder
+@ToString
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class User extends BaseEntity {
 
     @Id

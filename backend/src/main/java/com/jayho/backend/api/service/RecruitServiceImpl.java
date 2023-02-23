@@ -17,12 +17,20 @@ public class RecruitServiceImpl implements RecruitService{
 
     @Override
     public Recruit writeRecruit(RecruitInfoReq recruitInfoReq) {
-
         Recruit recruit = Recruit.builder()
                 .recruitTitle(recruitInfoReq.getRecruitTitle())
-
-
-        return null;
+                .stdName(recruitInfoReq.getStdName())
+                .stdDetail(recruitInfoReq.getStdDetail())
+                .stdType(recruitInfoReq.getStdType())
+                .comName(recruitInfoReq.getComName())
+                .startDate(recruitInfoReq.getStartDate())
+                .endDate(recruitInfoReq.getEndDate())
+                .stdDay(recruitInfoReq.getStdDay())
+                .stdLimit(recruitInfoReq.getStdLimit())
+                .recruitStatus(recruitInfoReq.getRecruitStatus())
+                .stdImg(recruitInfoReq.getStdImg())
+                .build();
+        return recruitRepository.save(recruit);
     }
 }
 

@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService{
         String userEmail = userLoginReq.getUserEmail();
         String userPw = userLoginReq.getUserPw();
         User user = getByUserEmail(userEmail);
-
+        System.out.println("user : " + user);
         if (user==null){
             return null;
         }else if (passwordEncoder.matches(userPw, user.getUserPw())){

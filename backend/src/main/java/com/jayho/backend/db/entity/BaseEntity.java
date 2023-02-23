@@ -1,6 +1,8 @@
 package com.jayho.backend.db.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +16,8 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@SuperBuilder
+@NoArgsConstructor
 public abstract class BaseEntity {
 
     @Column(name="create_at",nullable = false, updatable = false)

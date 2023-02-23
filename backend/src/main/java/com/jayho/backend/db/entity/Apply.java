@@ -1,13 +1,17 @@
 package com.jayho.backend.db.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Apply extends BaseEntity{
@@ -23,5 +27,5 @@ public class Apply extends BaseEntity{
     private Recruit recruit;
 
     @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private JoinType joinType;
 }
