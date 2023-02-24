@@ -1,6 +1,5 @@
 package com.jayho.backend.db.repository;
 
-import com.jayho.backend.db.entity.QApply;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
