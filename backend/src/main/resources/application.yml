@@ -1,0 +1,41 @@
+com.jayho:
+  db.url.host: localhost
+
+spring:
+  datasource:
+    #  jdbc:mysql:// url:????/mysql ??? ??
+    url: jdbc:mysql://${com.jayho.db.url.host}:3306/hometerviewdb
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+#        show_sql: true
+#        use_sql_comments: true
+        default_batch_fetch_size: 100
+mvc:
+  pathmatch:
+    matching-strategy: ant_path_matcher
+
+#logging.level:
+#  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
+
+jwt:
+  secret: mySecret
+  expiration: 1296000000
+
+
+  output.ansi.enabled: always
+  database: mysql   # ?? ?? ??
+  database-platform: org.hibernate.dialect.MySQL8Dialect # ?? ?? ??
+
+
+

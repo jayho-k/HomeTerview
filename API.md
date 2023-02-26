@@ -2,13 +2,13 @@
 
 Controller기준
 
-
+test2
 
 #### UserController
 
 | controller      | URL         | HTTP   | 설명             | params                                                       | Res                                                          |
 | --------------- | ----------- | ------ | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| api/v1/user     | /signup     | post   | 회원가입         | {'userEmail':email,<br />"userId":String,<br />"userName":String<br />"userPw":String} | {"statusCode":200}                                           |
+| api/v1/user     | /join       | post   | 회원가입         | {'userEmail':email,<br />"user":String,<br />"userName":String<br />"userPw":String} | {"statusCode":200}                                           |
 |                 | /login      | post   | 로그인           | "{"userId":String,<br />"userPw":String}"                    | {"statusCode":200}                                           |
 |                 | /logout     | post   | 로그아웃         |                                                              | {"statusCode":200}                                           |
 |                 | /           | update | 회원정보 수정    | Token<br />{'userEmail':email,<br />"userId":String,<br />"userName":String<br />"userPw":String} | {"statusCode":200}                                           |
@@ -71,7 +71,16 @@ Controller기준
 
 
 
+#### Apply
 
+applyRecruit
+
+- api/v1/recruit
+  - {}
+
+
+
+deleteRecruit
 
 
 
