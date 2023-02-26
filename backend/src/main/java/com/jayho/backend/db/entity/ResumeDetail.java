@@ -20,7 +20,7 @@ public class ResumeDetail extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="resume_id")
     private Resume resume;
-    private int itemNo;
+    private Long itemNo;
     private String detailQuestion;
     private String detailContents;
 

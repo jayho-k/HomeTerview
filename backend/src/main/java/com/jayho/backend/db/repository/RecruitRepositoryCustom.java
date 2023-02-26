@@ -1,5 +1,6 @@
 package com.jayho.backend.db.repository;
 
+import com.jayho.backend.api.service.dto.RecruitDto;
 import com.jayho.backend.db.entity.Recruit;
 import com.jayho.backend.db.entity.Status;
 import com.jayho.backend.db.entity.StudyType;
@@ -10,9 +11,7 @@ import java.util.List;
 
 public interface RecruitRepositoryCustom {
 
-    Page<Recruit> findAllByOrderByRecruitIdDesc(Pageable pageable);
-    Page<Recruit> findAllByStatusRecruitIdDesc(Status status, Pageable pageable);
-    Page<Recruit> findAllByStatusAndStudyTypeRecruitIdDesc(Status status, StudyType studyType ,Pageable pageable);
+    Page<RecruitDto> findAllByStatusAndStudyTypeRecruitIdDesc(Status status, StudyType studyType ,Pageable pageable);
     List<Recruit> findApplyingRecruitAllByUserId(Long userId);
 
 }

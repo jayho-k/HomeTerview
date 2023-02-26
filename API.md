@@ -71,7 +71,16 @@ test2
 
 
 
+#### Apply
 
+applyRecruit
+
+- api/v1/recruit
+  - {}
+
+
+
+deleteRecruit
 
 
 

@@ -29,8 +29,8 @@ public class Apply extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private JoinType joinType;
 
-//    public void setRecruit(Recruit recruit){
-//        this.recruit = recruit;
-//        recruit.getApplyList().add(this);
-//    }
+    public void setRecruit(Recruit recruit){
+        this.recruit = recruit;
+        recruit.getApplyList().add(this);
+    }
 }

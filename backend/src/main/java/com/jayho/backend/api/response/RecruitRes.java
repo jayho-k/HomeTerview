@@ -7,17 +7,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class RecruitListRes extends BaseResponseBody {
+public class RecruitRes extends BaseResponseBody {
 
-    private Page<RecruitDto> recruitList;
+    private RecruitDto recruitDto;
 
-    public static RecruitListRes of(Page<RecruitDto> recruitList, Integer statusCode, String message){
-        RecruitListRes res = new RecruitListRes();
-        res.setRecruitList(recruitList);
+    public static RecruitRes of (RecruitDto recruitDto, Integer statusCode, String message){
+        RecruitRes res = new RecruitRes();
+        res.setRecruitDto(recruitDto);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;

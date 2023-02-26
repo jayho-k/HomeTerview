@@ -1,8 +1,8 @@
 package com.jayho.backend.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,9 +26,14 @@ public class Recruit extends RoomSession {
     @Enumerated(EnumType.STRING)
     private Status recruitStatus;
 
-//    @OneToMany(mappedBy = "recruit")
-//    private List<Apply> applyList = new ArrayList<>();
+    @OneToMany(mappedBy = "recruit")
+    @JsonIgnore
+    @Builder.Default
+    private List<Apply> applyList = new ArrayList<>();
 
-
+    public void addApplyList(Apply apply){
+        applyList.add(apply);
+        apply.setRecruit(this);
+    }
 
 }

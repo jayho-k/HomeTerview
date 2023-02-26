@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
+@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,13 +1,15 @@
 package com.jayho.backend.api.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jayho.backend.common.util.ValidEnum;
+import com.jayho.backend.db.entity.Apply;
 import com.jayho.backend.db.entity.Status;
 import com.jayho.backend.db.entity.StudyType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
+
 
 @Getter
 @Setter

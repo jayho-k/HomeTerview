@@ -8,7 +8,6 @@ import com.jayho.backend.db.entity.User;
 public interface UserService {
     User registerUser(UserRegisterReq userRegisterReqInfo);
     User loginUser(UserLoginReq userLoginReq);
-
     User updateUser(Long id, UserUpdateReq userUpdateReq);
     User getByUserName(String username);
     User getByUserId(Long id);

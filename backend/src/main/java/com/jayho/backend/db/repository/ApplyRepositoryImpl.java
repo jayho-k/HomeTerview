@@ -17,8 +17,6 @@ public class ApplyRepositoryImpl implements ApplyRepositoryCustom{
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-
-
     @Override
     public long countByRecruitId(Long recruitId) {
         return queryFactory
