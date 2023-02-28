@@ -1,12 +1,13 @@
 package com.jayho.backend.api.service;
 
 
-import com.jayho.backend.api.request.RecruitInfoReq;
-import com.jayho.backend.api.service.dto.RecruitDto;
+import com.jayho.backend.api.request.ResumeDetailCreateReq;
+import com.jayho.backend.api.service.dto.ResumeDetailDto;
 import com.jayho.backend.api.service.dto.ResumeListDto;
-import com.jayho.backend.db.entity.Recruit;
 import com.jayho.backend.db.entity.Resume;
+import com.jayho.backend.db.entity.ResumeDetail;
 import com.jayho.backend.db.entity.User;
+import com.jayho.backend.db.repository.ResumeDetailRepositoryCustom;
 import com.jayho.backend.db.repository.ResumeDetailRepository;
 import com.jayho.backend.db.repository.ResumeRepository;
 import com.jayho.backend.db.repository.UserRepository;
@@ -25,6 +26,7 @@ public class ResumeServiceImpl implements ResumeService {
     private final UserRepository userRepository;
     private final ResumeRepository resumeRepository;
     private final ResumeDetailRepository resumeDetailRepository;
+    private final ResumeDetailRepositoryCustom resumeDetailCustomRepository;
 
     @Override
     @Transactional
@@ -35,6 +37,16 @@ public class ResumeServiceImpl implements ResumeService {
                 .user(user)
                 .build();
         resumeRepository.save(resume);
+    }
+
+    @Override
+    @Transactional
+    public int deleteResume(Long resumeId, Long userId) {
+        Resume resume = resumeRepository.findById(resumeId).orElse(null);
+        if (resume == null) return 0;
+        if (userId!=resume.getUser().getId()) return 1;
+        resumeRepository.delete(resume);
+        return 2;
     }
 
     @Override
@@ -51,6 +63,24 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setResumeTitle(resumeTitle);
         ResumeListDto resumeListDto = new ResumeListDto(resume);
         return resumeListDto;
+    }
+
+    @Override
+    @Transactional
+    public ResumeDetail createResumeDetail(ResumeDetailCreateReq resumeDetailCreateReq) {
+        Resume resume = resumeRepository.findById(resumeDetailCreateReq.getResumeId()).orElseThrow();
+        ResumeDetail resumeDetail = ResumeDetail.builder()
+                .resume(resume)
+                .itemNo(resumeDetailCreateReq.getItemNo())
+                .detailQuestion(resumeDetailCreateReq.getDetailQuestion())
+                .detailContents(resumeDetailCreateReq.getDetailContents())
+                .build();
+        return resumeDetailRepository.save(resumeDetail);
+    }
+
+    @Override
+    public ResumeDetailDto getResumeDetail(Long resumeId, Long itemNo) {
+        return resumeDetailCustomRepository.findByResumeIdAndItemNo(resumeId, itemNo);
     }
 }
 
