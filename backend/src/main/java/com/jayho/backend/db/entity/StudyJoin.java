@@ -29,4 +29,9 @@ public class StudyJoin {
     private JoinType joinType;
 
     private boolean joinStatus;
+
+    public void setStudy(Study study){
+        this.study = study;
+        study.getStudyJoinList().add(this);
+    }
 }

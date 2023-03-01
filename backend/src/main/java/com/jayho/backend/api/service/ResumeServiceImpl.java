@@ -2,8 +2,11 @@ package com.jayho.backend.api.service;
 
 
 import com.jayho.backend.api.request.ResumeDetailCreateReq;
+import com.jayho.backend.api.request.UpdateResumeReq;
 import com.jayho.backend.api.service.dto.ResumeDetailDto;
 import com.jayho.backend.api.service.dto.ResumeListDto;
+import com.jayho.backend.common.auth.UserDetails;
+import com.jayho.backend.common.model.response.BaseResponseBody;
 import com.jayho.backend.db.entity.Resume;
 import com.jayho.backend.db.entity.ResumeDetail;
 import com.jayho.backend.db.entity.User;
@@ -12,10 +15,17 @@ import com.jayho.backend.db.repository.ResumeDetailRepository;
 import com.jayho.backend.db.repository.ResumeRepository;
 import com.jayho.backend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,6 +91,34 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResumeDetailDto getResumeDetail(Long resumeId, Long itemNo) {
         return resumeDetailCustomRepository.findByResumeIdAndItemNo(resumeId, itemNo);
+    }
+
+    @Override
+    public Optional<ResumeDetail> getResumeDetailById(Long resumeDetailId) {
+        return resumeDetailRepository.findById(resumeDetailId);
+    }
+
+    @Override
+    @Transactional
+    public ResumeDetailDto updateResumeDetail(ResumeDetail resumeDetail,Long userId , UpdateResumeReq updateResumeReq) {
+        if (resumeDetail.getResume().getUser().getId() != userId) {
+            return null;
+        }
+        resumeDetail.setDetailContents(updateResumeReq.getDetailContents());
+        resumeDetail.setDetailQuestion(updateResumeReq.getDetailQuestion());
+        ResumeDetailDto resumeDetailDto = new ResumeDetailDto(resumeDetail);
+        return resumeDetailDto;
+    }
+
+    @Override
+    @Transactional
+    public int deleteResumeDetail(Long resumeDetailId, Long userId) {
+        ResumeDetail resumeDetail = resumeDetailRepository.findById(resumeDetailId).orElse(null);
+        if(resumeDetail==null || resumeDetail.getResume().getUser().getId()!=userId) return 1;
+        else{
+            resumeDetailRepository.delete(resumeDetail);
+            return 0;
+        }
     }
 }
 

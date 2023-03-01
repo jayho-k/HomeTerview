@@ -12,7 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ApplyRecruitDto {
 
-
     private int result;
     private Apply apply;
 
