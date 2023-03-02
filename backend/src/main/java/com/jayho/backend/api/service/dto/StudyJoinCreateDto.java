@@ -12,16 +12,17 @@ import javax.persistence.*;
 @Setter
 public class StudyJoinCreateDto {
     private Long studyJoinId;
+    private Long userId;
     private String userName;
     private String userImg;
     private String userEmail;
     private JoinType joinType;
     public StudyJoinCreateDto(StudyJoin studyJoin){
         studyJoinId = studyJoin.getId();
+        userId = studyJoin.getUser().getId();
         userName = studyJoin.getUser().getUserName();
         userImg = studyJoin.getUser().getUserImg();
         userEmail = studyJoin.getUser().getUserEmail();
         joinType = studyJoin.getJoinType();
     }
-
 }

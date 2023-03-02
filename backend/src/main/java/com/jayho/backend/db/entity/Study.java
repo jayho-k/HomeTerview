@@ -19,13 +19,23 @@ import java.util.List;
 @AllArgsConstructor
 public class Study extends RoomSession{
     @Id @GeneratedValue
-    @Column(name="std_id")
+    @Column(name="study_id")
     private Long id;
 
     @OneToMany(mappedBy = "study")
     @JsonIgnore
     @Builder.Default
     private List<StudyJoin> studyJoinList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "study")
+    @JsonIgnore
+    @Builder.Default
+    private List<CommonQuestion> commonQuestionList = new ArrayList<>();
+
+    public void addCommonQuestion(CommonQuestion commonQuestion) {
+        commonQuestionList.add(commonQuestion);
+        commonQuestion.setStudy(this);
+    }
 
 
     public void addStudyJoin(StudyJoin studyJoin){

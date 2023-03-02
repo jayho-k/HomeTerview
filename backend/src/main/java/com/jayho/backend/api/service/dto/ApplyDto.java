@@ -14,11 +14,13 @@ import javax.persistence.*;
 public class ApplyDto {
     private Long id;
     private JoinType joinType;
+    private Long userId;
     private String username;
     private String userEmail;
     public ApplyDto(Apply apply){
         id = apply.getId();
         joinType = apply.getJoinType();
+        userId = apply.getUser().getId();
         username = apply.getUser().getUserName();
         userEmail = apply.getUser().getUserEmail();
     }

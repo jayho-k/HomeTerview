@@ -10,10 +10,7 @@ import com.jayho.backend.common.model.response.BaseResponseBody;
 import com.jayho.backend.db.entity.Resume;
 import com.jayho.backend.db.entity.ResumeDetail;
 import com.jayho.backend.db.entity.User;
-import com.jayho.backend.db.repository.ResumeDetailRepositoryCustom;
-import com.jayho.backend.db.repository.ResumeDetailRepository;
-import com.jayho.backend.db.repository.ResumeRepository;
-import com.jayho.backend.db.repository.UserRepository;
+import com.jayho.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,6 +32,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     private final UserRepository userRepository;
     private final ResumeRepository resumeRepository;
+    private final ResumeRepositoryCustom resumeRepositoryCustom;
     private final ResumeDetailRepository resumeDetailRepository;
     private final ResumeDetailRepositoryCustom resumeDetailCustomRepository;
 
@@ -68,7 +66,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     @Transactional
     public ResumeListDto updateResume(Long userId, Long resumeId, String resumeTitle) {
-        Resume resume = resumeRepository.findByIdAndUserId(resumeId, userId).orElse(null);
+        Resume resume = resumeRepositoryCustom.findByIdAndUserId(resumeId, userId).orElse(null);
         if (resume==null){return null;}
         resume.setResumeTitle(resumeTitle);
         ResumeListDto resumeListDto = new ResumeListDto(resume);

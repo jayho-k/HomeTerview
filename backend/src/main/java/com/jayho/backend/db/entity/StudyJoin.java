@@ -28,10 +28,25 @@ public class StudyJoin {
     @Enumerated(EnumType.STRING)
     private JoinType joinType;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
+
     private boolean joinStatus;
+
+
+    // mapping
+    public void setResume(Resume resume){
+        this.resume = resume;
+    }
 
     public void setStudy(Study study){
         this.study = study;
         study.getStudyJoinList().add(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getStudyJoinList().add(this);
     }
 }

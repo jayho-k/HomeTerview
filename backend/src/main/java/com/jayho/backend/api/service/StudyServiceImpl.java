@@ -1,8 +1,10 @@
 package com.jayho.backend.api.service;
 
 import com.jayho.backend.api.service.dto.StudyCreateDto;
+import com.jayho.backend.api.service.dto.StudyDetailGetDto;
 import com.jayho.backend.db.entity.*;
 import com.jayho.backend.db.repository.*;
+import com.querydsl.core.group.GroupBy;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,10 @@ public class StudyServiceImpl implements StudyService {
     private final RecruitRepository recruitRepository;
     private final ApplyRepository applyRepository;
     private final StudyJoinRepository studyJoinRepository;
+    private final StudyJoinRepositoryCustom studyJoinRepositoryCustom;
     private final UserRepository userRepository;
+    private final ResumeRepositoryCustom resumeRepositoryCustom;
+
 
     @Override
     @Transactional
@@ -68,6 +73,48 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
+    public List<StudyCreateDto> getStudyList(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        List<StudyJoin> studyJoinList = user.getStudyJoinList();
+        List<StudyCreateDto> studyList = new ArrayList<>();
+        for (StudyJoin studyJoin : studyJoinList) {
+            studyList.add(new StudyCreateDto(studyJoin.getStudy()));
+        }
+        return studyList;
+    }
+
+    @Override
+    public StudyDetailGetDto getStudyDetail(Long studyId, Long userId) {
+        Study study = studyRepository.findById(studyId).orElse(null);
+        StudyDetailGetDto studyDetailGetDto = new StudyDetailGetDto(study);
+        return studyDetailGetDto;
+    }
+
+    @Override
+    @Transactional
+    public void updateRegistedResume(Long studyId, Long userId, Long resumeId) {
+
+        StudyJoin studyJoin = studyJoinRepositoryCustom.findByStudyIdAndUserId(studyId, userId).orElseThrow();
+        Resume resume = resumeRepositoryCustom.findByIdAndUserId(resumeId,userId).orElseThrow();
+        studyJoin.setResume(resume);
+
+
+
+//        레거시 코드
+//        Study study = studyRepository.findById(studyId).orElse(null);
+//        List<StudyJoin> studyJoinList = study.getStudyJoinList();
+//        Long userStudyJoinId = null;
+//        for (StudyJoin studyJoin : studyJoinList) {
+//            if(studyJoin.getUser().getId()==userId){
+//                userStudyJoinId = studyJoin.getId();
+//            }
+//        }
+//        StudyJoin studyJoin = studyJoinRepository.findById(userStudyJoinId).orElse(null);
+//        Resume resume = resumeRepository.findById(resumeId).orElse(null);
+
+    }
+
+    @Override
     @Transactional
     public void recruitComplete(Recruit recruit) {
         recruit.recruitComplete();
@@ -93,7 +140,7 @@ public class StudyServiceImpl implements StudyService {
         Long leaderId = null;
         for (Apply apply : applyList) {
             if(apply.getJoinType()==JoinType.LEADER){
-                leaderId = apply.getId();
+                leaderId = apply.getUser().getId();
                 break;
             }
         }
