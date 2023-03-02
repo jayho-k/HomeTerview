@@ -1,10 +1,13 @@
 package com.jayho.backend.db.repository;
 
+import com.jayho.backend.db.entity.Apply;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+
+import java.util.List;
 
 import static com.jayho.backend.db.entity.QApply.*;
 
@@ -23,5 +26,13 @@ public class ApplyRepositoryImpl implements ApplyRepositoryCustom{
                 .selectFrom(apply)
                 .where(apply.recruit.id.eq(recruitId))
                 .fetchCount();
+    }
+
+    @Override
+    public List<Apply> findAllByRecruitId(Long recruitId) {
+        return queryFactory
+                .selectFrom(apply)
+                .where(apply.recruit.id.eq(recruitId))
+                .fetch();
     }
 }

@@ -29,4 +29,7 @@ public class Resume extends BaseEntity {
     @OneToMany(mappedBy = "resume")
     @Builder.Default
     private List<ResumeDetail> resumeDetail = new ArrayList<>();
+
+    @OneToOne(mappedBy = "resume")
+    private StudyJoin studyJoin;
 }

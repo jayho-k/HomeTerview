@@ -9,6 +9,8 @@ import lombok.experimental.SuperBuilder;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,4 +40,12 @@ public class User extends BaseEntity {
 
     private boolean userDelete;
 
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<StudyJoin> studyJoinList = new ArrayList<>();
+
+    public void addStudyJoin(StudyJoin studyJoin){
+        studyJoinList.add(studyJoin);
+        studyJoin.setUser(this);
+    }
 }

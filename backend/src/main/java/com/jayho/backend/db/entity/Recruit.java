@@ -31,6 +31,9 @@ public class Recruit extends RoomSession {
     @Builder.Default
     private List<Apply> applyList = new ArrayList<>();
 
+    public void recruitComplete() {
+        this.recruitStatus = Status.COMPLETE;
+    }
     public void addApplyList(Apply apply){
         applyList.add(apply);
         apply.setRecruit(this);
