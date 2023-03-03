@@ -30,4 +30,10 @@ public class PersonalQuestion extends BaseEntity {
     private String itemContents;
     private boolean itemDelete;
 
+    public void setResumeDetail(ResumeDetail resumeDetail) {
+        this.resumeDetail = resumeDetail;
+        resumeDetail.getPersonalQuestionList().add(this);
+    }
+
+
 }

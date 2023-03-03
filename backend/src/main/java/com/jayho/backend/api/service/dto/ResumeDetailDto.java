@@ -19,6 +19,7 @@ public class ResumeDetailDto {
     private String detailQuestion;
     private String detailContents;
 
+
     public ResumeDetailDto(ResumeDetail resumeDetail){
         resumeId = resumeDetail.getResume().getId();
         itemNo = resumeDetail.getItemNo();

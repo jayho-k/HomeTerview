@@ -2,6 +2,7 @@ package com.jayho.backend.api.service;
 
 import com.jayho.backend.api.service.dto.StudyCreateDto;
 import com.jayho.backend.api.service.dto.StudyDetailGetDto;
+import com.jayho.backend.api.service.dto.StudyJoinCreateDto;
 import com.jayho.backend.db.entity.*;
 import com.jayho.backend.db.repository.*;
 import com.querydsl.core.group.GroupBy;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
+    private final StudyRepositoryCustom studyRepositoryCustom;
     private final RecruitRepository recruitRepository;
     private final ApplyRepository applyRepository;
     private final StudyJoinRepository studyJoinRepository;
@@ -74,13 +76,19 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public List<StudyCreateDto> getStudyList(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        List<StudyJoin> studyJoinList = user.getStudyJoinList();
-        List<StudyCreateDto> studyList = new ArrayList<>();
-        for (StudyJoin studyJoin : studyJoinList) {
-            studyList.add(new StudyCreateDto(studyJoin.getStudy()));
-        }
-        return studyList;
+        List<Study> studyList = studyRepositoryCustom.findAllByUserIdJoinedByStudy(userId);
+        return studyList.stream()
+                .map(s -> new StudyCreateDto(s))
+                .collect(Collectors.toList());
+
+//        레거시 코드 => 5개 => 3개 쿼리로 줄임
+//        User user = userRepository.findById(userId).orElse(null);
+//        List<StudyJoin> studyJoinList = user.getStudyJoinList();
+//        List<StudyCreateDto> studyList = new ArrayList<>();
+//        for (StudyJoin studyJoin : studyJoinList) {
+//            studyList.add(new StudyCreateDto(studyJoin.getStudy()));
+//        }
+//        return studyList;
     }
 
     @Override
@@ -97,8 +105,6 @@ public class StudyServiceImpl implements StudyService {
         StudyJoin studyJoin = studyJoinRepositoryCustom.findByStudyIdAndUserId(studyId, userId).orElseThrow();
         Resume resume = resumeRepositoryCustom.findByIdAndUserId(resumeId,userId).orElseThrow();
         studyJoin.setResume(resume);
-
-
 
 //        레거시 코드
 //        Study study = studyRepository.findById(studyId).orElse(null);

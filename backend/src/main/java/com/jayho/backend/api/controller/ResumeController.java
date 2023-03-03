@@ -4,14 +4,17 @@ import com.jayho.backend.api.request.PersonalQuestionReq;
 import com.jayho.backend.api.request.ResumeDetailCreateReq;
 import com.jayho.backend.api.request.ResumeInfoReq;
 import com.jayho.backend.api.request.UpdateResumeReq;
+import com.jayho.backend.api.response.PersonalQuestionListRes;
 import com.jayho.backend.api.response.ResumeDetailRes;
 import com.jayho.backend.api.response.ResumeListRes;
 import com.jayho.backend.api.service.PersonalQuestionService;
 import com.jayho.backend.api.service.ResumeService;
+import com.jayho.backend.api.service.dto.PersonalQuestionDto;
 import com.jayho.backend.api.service.dto.ResumeDetailDto;
 import com.jayho.backend.api.service.dto.ResumeListDto;
 import com.jayho.backend.common.auth.UserDetails;
 import com.jayho.backend.common.model.response.BaseResponseBody;
+import com.jayho.backend.db.entity.PersonalQuestion;
 import com.jayho.backend.db.entity.ResumeDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -107,17 +110,26 @@ public class ResumeController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "자기소개서 상세 항목 삭제를 실패하셨습니다."));
     }
 
-    @PostMapping({"/study/{stdId}/detail/{resumeDetailId}/question"})
+    @PostMapping({"/study/{studyId}/detail/{resumeDetailId}/question"})
     public ResponseEntity<? extends BaseResponseBody> registerQuestion(Authentication authentication,
-                                                                       @PathVariable("stdNo") Long stdNo,
-                                                                       @PathVariable("detailNo") Long detailNo,
+                                                                       @PathVariable Long studyId,
+                                                                       @PathVariable Long resumeDetailId,
                                                                        @RequestBody @Valid PersonalQuestionReq personalQuestionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         try {
-            personalQuestionService.registerQuestion(userDetails.getUserNo(), stdNo, detailNo, personalQuestionReq);
+            personalQuestionService.registerQuestion(userDetails.getUser(), studyId, resumeDetailId, personalQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 등록에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "개인 질문이 등록되었습니다."));
     }
+
+    @GetMapping({"/study/{studyId}/detail/{resumeDetailId}/question"})
+    public ResponseEntity<PersonalQuestionListRes> getPersonalQuestionList(@PathVariable Long studyId,
+                                                                           @PathVariable Long resumeDetailId) {
+        List<PersonalQuestionDto> personalQuestionDtoList = personalQuestionService.getList(studyId, resumeDetailId);
+        int count = personalQuestionDtoList.size();
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestionDtoList, count, 200, "해당 자기소개서 항목에 등록된 개인 질문입니다."));
+    }
+
 }

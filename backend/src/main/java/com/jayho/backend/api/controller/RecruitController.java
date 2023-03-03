@@ -70,10 +70,10 @@ public class RecruitController {
 
     }
     @PutMapping("/{recruitId}")
-    public ResponseEntity<? extends BaseResponseBody> updateRecruitDetail(@PathVariable Long recruitId, @RequestBody RecruitInfoReq recruitInfoReq) {
+    public ResponseEntity<? extends BaseResponseBody> updateRecruitDetail(@PathVariable Long recruitId, @RequestBody RecruitInfoReq recruitInfoReq)  {
         RecruitDto updatedRecruit = recruitService.updateRecruitDetail(recruitId, recruitInfoReq);
         if (updatedRecruit == null)
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "해당하는 스터디 모집글이 없습니다."));
+        return ResponseEntity.status(403).body(BaseResponseBody.of(403, "해당하는 스터디 모집글이 없습니다."));
         return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit,200, "스터디 모집글이 수정되었습니다."));
     }
 
