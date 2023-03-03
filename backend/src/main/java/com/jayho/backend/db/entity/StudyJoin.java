@@ -12,6 +12,12 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "userId", columnList = "user_id"),
+        @Index(name = "studyId_userId", columnList = "study_id,user_id"),
+        @Index(name = "resumeId_userId", columnList = "resume_id,user_id")
+}
+)
 public class StudyJoin {
     @Id @GeneratedValue
     @Column(name="study_join_id")

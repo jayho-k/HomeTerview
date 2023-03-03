@@ -30,6 +30,7 @@ dependencies {
 
 	implementation 'org.jetbrains:annotations:20.1.0'
 
+	// 쿼리 dsl
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"

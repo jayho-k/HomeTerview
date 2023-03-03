@@ -14,6 +14,10 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "user_id", columnList = "user_id")
+}
+)
 public class Resume extends BaseEntity {
 
     @Id @GeneratedValue

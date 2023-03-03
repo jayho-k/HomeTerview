@@ -1,9 +1,12 @@
 package com.jayho.backend.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -11,6 +14,10 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "itemNo", columnList = "itemNo")
+}
+)
 public class ResumeDetail extends BaseEntity {
     @Id @GeneratedValue
     @Column(name="resume_detail_id")
@@ -22,4 +29,15 @@ public class ResumeDetail extends BaseEntity {
     private String detailQuestion;
     private String detailContents;
 
+    @OneToMany(mappedBy = "resumeDetail")
+    @JsonIgnore
+    @Builder.Default
+    private List<PersonalQuestion> personalQuestionList = new ArrayList<>();
+
+
+    // association method
+    public void addPersonalQuestion(PersonalQuestion personalQuestion) {
+        personalQuestionList.add(personalQuestion);
+        personalQuestion.setResumeDetail(this);
+    }
 }

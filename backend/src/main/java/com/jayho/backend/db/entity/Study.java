@@ -17,6 +17,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Study extends RoomSession{
     @Id @GeneratedValue
     @Column(name="study_id")

@@ -6,14 +6,11 @@ import com.jayho.backend.api.request.UserUpdateReq;
 import com.jayho.backend.db.entity.User;
 import com.jayho.backend.db.entity.UserType;
 import com.jayho.backend.db.repository.UserRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

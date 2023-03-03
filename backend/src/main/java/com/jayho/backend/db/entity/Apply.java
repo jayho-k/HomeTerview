@@ -14,6 +14,10 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "userId_recruitId_index", columnList = "user_id,recruit_id")
+    }
+)
 public class Apply extends BaseEntity{
     @Id @GeneratedValue
     @Column(name="apply_id")

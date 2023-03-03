@@ -55,6 +55,8 @@ public class RecruitRepositoryImpl implements RecruitRepositoryCustom {
         // user가 만든 모든 apply된 recruit를 찾을꺼야
         // fetch join을 썼을때 쿼리 2개 => user하나 나머지 조인 하나
         // 하지만 join을 썼을 때 또한 user하나 recruit하나가 나가게 된다.
+        // 밖에서 get으로 또다른 값을 가져오는 것이 아닌 where문에서 사용하는 것이기 때문에
+        // fetch join을 사용하지 않아도 된다.
         return queryFactory
                 .selectFrom(recruit)
                 .join(recruit.applyList, apply)
