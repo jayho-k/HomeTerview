@@ -3,6 +3,7 @@ package com.jayho.backend.api.service;
 import com.jayho.backend.api.request.ResumeDetailCreateReq;
 import com.jayho.backend.api.request.UpdateResumeReq;
 import com.jayho.backend.api.service.dto.ResumeDetailDto;
+import com.jayho.backend.api.service.dto.ResumeDto;
 import com.jayho.backend.api.service.dto.ResumeListDto;
 import com.jayho.backend.db.entity.ResumeDetail;
 
@@ -16,6 +17,7 @@ public interface ResumeService {
     int deleteResume(Long resumeId, Long userId);
 
     List<ResumeListDto> getResumeList(Long userId);
+    List<ResumeDto> getResumeListFetch(Long userId);
 
     ResumeListDto updateResume(Long userId, Long resumeId, String resumeTitle);
 

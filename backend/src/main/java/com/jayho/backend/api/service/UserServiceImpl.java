@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.Proxy;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -43,12 +45,16 @@ public class UserServiceImpl implements UserService{
         String userEmail = userLoginReq.getUserEmail();
         String userPw = userLoginReq.getUserPw();
         User user = getByUserEmail(userEmail);
-        System.out.println("user : " + user);
+
         if (user==null){
             return null;
-        }else if (passwordEncoder.matches(userPw, user.getUserPw())){
+        }else if(user.getUserPw().equals(userPw)){
             return user;
-        }else{
+        }
+//        else if (passwordEncoder.matches(userPw, user.getUserPw())){
+//            return user;
+//        }
+        else{
             return null;
         }
     }

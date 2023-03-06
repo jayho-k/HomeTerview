@@ -19,6 +19,10 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name = "user_email", columnList = "userEmail")
+    }
+)
 public class User extends BaseEntity {
 
     @Id

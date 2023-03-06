@@ -4,6 +4,7 @@ package com.jayho.backend.api.service;
 import com.jayho.backend.api.request.ResumeDetailCreateReq;
 import com.jayho.backend.api.request.UpdateResumeReq;
 import com.jayho.backend.api.service.dto.ResumeDetailDto;
+import com.jayho.backend.api.service.dto.ResumeDto;
 import com.jayho.backend.api.service.dto.ResumeListDto;
 import com.jayho.backend.common.auth.UserDetails;
 import com.jayho.backend.common.model.response.BaseResponseBody;
@@ -56,13 +57,20 @@ public class ResumeServiceImpl implements ResumeService {
         resumeRepository.delete(resume);
         return 2;
     }
-
     @Override
     public List<ResumeListDto> getResumeList(Long userId) {
         List<Resume> resumeList = resumeRepository.findAllByUserId(userId);
         List<ResumeListDto> result = resumeList.stream().map(r -> new ResumeListDto(r)).collect(Collectors.toList());
         return result;
     }
+
+    @Override
+    public List<ResumeDto> getResumeListFetch(Long userId) {
+        List<ResumeDto> resumeList = resumeRepositoryCustom.findAllByUserId(userId);
+//        List<ResumeListDto> result = resumeList.stream().map(r -> new ResumeListDto(r)).collect(Collectors.toList());
+        return resumeList;
+    }
+
     @Override
     @Transactional
     public ResumeListDto updateResume(Long userId, Long resumeId, String resumeTitle) {

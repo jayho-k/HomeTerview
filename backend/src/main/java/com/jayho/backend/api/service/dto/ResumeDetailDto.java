@@ -14,14 +14,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class ResumeDetailDto {
 
-    private Long resumeId;
     private Long itemNo;
     private String detailQuestion;
     private String detailContents;
 
 
     public ResumeDetailDto(ResumeDetail resumeDetail){
-        resumeId = resumeDetail.getResume().getId();
+//        resumeId = resumeDetail.getResume().getId();
         itemNo = resumeDetail.getItemNo();
         detailQuestion = resumeDetail.getDetailQuestion();
         detailContents = resumeDetail.getDetailContents();

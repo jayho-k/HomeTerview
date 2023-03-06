@@ -31,7 +31,6 @@ import java.util.List;
 public class StudyController {
 
     private final StudyService studyService;
-    private final ResumeService resumeService;
     private final CommonQuestionService commonQuestionService;
 
     @PostMapping("")
@@ -83,6 +82,7 @@ public class StudyController {
     @GetMapping({"/{studyId}/common"})
     public ResponseEntity<CommonQuestionListRes> getCommonQuestionList(@PathVariable Long studyId) {
         List<CommonQuestionListDto> commonQuestionDtoList = commonQuestionService.getList(studyId);
+//        List<CommonQuestionDto> commonQuestionDtoList = commonQuestionService.getListFetch(studyId);
         return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestionDtoList, 200, "스터디 스페이스에 등록된 공통 질문 목록입니다."));
     }
 

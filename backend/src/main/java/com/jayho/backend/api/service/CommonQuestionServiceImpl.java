@@ -1,6 +1,7 @@
 package com.jayho.backend.api.service;
 
 import com.jayho.backend.api.request.CommonQuestionReq;
+import com.jayho.backend.api.service.dto.CommonQuestionDto;
 import com.jayho.backend.api.service.dto.CommonQuestionListDto;
 import com.jayho.backend.db.entity.CommonQuestion;
 import com.jayho.backend.db.entity.Study;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,4 +51,11 @@ public class CommonQuestionServiceImpl implements CommonQuestionService{
 //                .map(c -> new CommonQuestionDto(c)).collect(Collectors.toList());
 //        return commonQuestionDtoList;
     }
+
+    @Override
+    public List<CommonQuestionDto> getListFetch(Long studyId) {
+        List<CommonQuestion> commonQuestionList = commonQuestionRepositoryCustom.findCommonUserByStudyIdFetch(studyId);
+        return commonQuestionList.stream().map(c -> new CommonQuestionDto(c)).collect(Collectors.toList());
+    }
+
 }

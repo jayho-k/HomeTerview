@@ -2,6 +2,7 @@ package com.jayho.backend.db.repository;
 
 import com.jayho.backend.api.service.dto.CommonQuestionDto;
 import com.jayho.backend.api.service.dto.CommonQuestionListDto;
+import com.jayho.backend.db.entity.CommonQuestion;
 import com.jayho.backend.db.entity.QCommonQuestion;
 import com.jayho.backend.db.entity.QUser;
 import com.jayho.backend.db.entity.QuestionType;
@@ -36,6 +37,17 @@ public class CommonQuestionRepositoryImpl implements CommonQuestionRepositoryCus
                                 commonQuestion.questionType
                         ))
                 .from(commonQuestion)
+                .join(commonQuestion.user,user)
                 .fetch();
+    }
+
+    @Override
+    public List<CommonQuestion> findCommonUserByStudyIdFetch(Long studyId) {
+        return queryFactory
+                .select(commonQuestion)
+                .from(commonQuestion)
+                .join(commonQuestion.user).fetchJoin()
+                .fetch();
+
     }
 }

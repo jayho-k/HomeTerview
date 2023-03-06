@@ -42,8 +42,8 @@ public class StudyServiceImpl implements StudyService {
         List<Apply> applyList = recruit.getApplyList();
 
         // leader만 방을 만들수 있음
-        Long leaderId = getLeaderId(applyList);
-        if (userId != leaderId){return null;}
+//        Long leaderId = getLeaderId(applyList);
+//        if (userId != leaderId){return null;}
 
 
         Study studyBuilder = Study.builder()
@@ -73,6 +73,7 @@ public class StudyServiceImpl implements StudyService {
         StudyCreateDto studyCreateDto = new StudyCreateDto(study);
         return studyCreateDto;
     }
+
 
     @Override
     public List<StudyCreateDto> getStudyList(Long userId) {

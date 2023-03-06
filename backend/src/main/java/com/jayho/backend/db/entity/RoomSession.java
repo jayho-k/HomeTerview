@@ -30,4 +30,5 @@ public abstract class RoomSession extends BaseEntity {
     private String stdNotation;
     private String startDate;
     private String endDate;
+
 }

@@ -20,7 +20,7 @@ import java.util.List;
 )
 public class ResumeDetail extends BaseEntity {
     @Id @GeneratedValue
-    @Column(name="resume_detail_id")
+    @Column(name="resume_detail_id", unique = true)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="resume_id")

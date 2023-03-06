@@ -11,6 +11,7 @@ import com.jayho.backend.api.service.PersonalQuestionService;
 import com.jayho.backend.api.service.ResumeService;
 import com.jayho.backend.api.service.dto.PersonalQuestionDto;
 import com.jayho.backend.api.service.dto.ResumeDetailDto;
+import com.jayho.backend.api.service.dto.ResumeDto;
 import com.jayho.backend.api.service.dto.ResumeListDto;
 import com.jayho.backend.common.auth.UserDetails;
 import com.jayho.backend.common.model.response.BaseResponseBody;
@@ -43,7 +44,8 @@ public class ResumeController {
     @GetMapping("")
     public ResponseEntity<ResumeListRes> getResumeList(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        List<ResumeListDto> resumeList = resumeService.getResumeList(userDetails.getUserNo());
+//        List<ResumeListDto> resumeList = resumeService.getResumeList(userDetails.getUserNo());
+        List<ResumeDto> resumeList = resumeService.getResumeListFetch(userDetails.getUserNo());
         return ResponseEntity.status(200).body(ResumeListRes.of(resumeList, 200, "자기소개서 목록조회에 성공하였습니다."));
     }
 

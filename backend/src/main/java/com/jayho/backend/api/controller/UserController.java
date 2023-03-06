@@ -27,7 +27,6 @@ public class UserController {
     // 형식 확인하기
     @PostMapping("/join")
     public ResponseEntity<? extends BaseResponseBody> registerUser(@RequestBody @Valid UserRegisterReq userInfo){
-        System.out.println("Controller");
         userService.registerUser(userInfo);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200,"성공하였습니다."));
     }
